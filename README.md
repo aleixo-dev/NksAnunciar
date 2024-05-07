@@ -11,7 +11,7 @@ Contendo um arquivo `config.yml` simples para ser configurado
 |/anunciar reload |Recarrega as configuração alteradas em `config.yml`. | `nksanunciar.reload`    |
 
 ## Download 📦
-Você pode estar realizando o download do plugin [**aqui**](https://github.com/aleixo-dev/NksLoteria/releases), sinta-se a vontade de mandar melhorias ou sugestões.
+Você pode estar realizando o download do plugin [**aqui**](https://github.com/aleixo-dev/NksAnunciar/releases), sinta-se a vontade de mandar melhorias ou sugestões.
 
 ## Banco de Dados 🎲
 - MYSQL
