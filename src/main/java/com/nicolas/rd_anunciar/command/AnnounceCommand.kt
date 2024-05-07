@@ -15,7 +15,7 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
 
         val player = sender as? Player ?: return true
 
-        if (args.isNotEmpty() && args[0] == "reload") {
+        if (args.isNotEmpty() && args[0] == "reload" && player.hasPermission("nksanunciar.reload")) {
             plugin.reloadConfig()
             player.sendMessage(TextColorUtil.text("&6&lnksAnunciar &7- &aPlugin recarregado com sucesso!"))
             return true
@@ -26,7 +26,7 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
 
         if (commandIsAvailable(currentTime, lasTimeUpdate)) {
 
-            if (!player.hasPermission("rdanunciar.usar")) {
+            if (!player.hasPermission("nksanunciar.usar")) {
                 player.sendMessage(TextColorUtil.text(plugin.config.getString("mensagens.permissao")))
                 return true
             }
