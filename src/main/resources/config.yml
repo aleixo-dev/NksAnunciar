@@ -1,0 +1,50 @@
+#
+#   _   _ _           _                           _
+#  | \ | | | _____   / \   _ __  _   _ _ __   ___(_) __ _ _ __
+#  |  \| | |/ / __| / _ \ | '_ \| | | | '_ \ / __| |/ _` | '__|
+#  | |\  |   <\__ \/ ___ \| | | | |_| | | | | (__| | (_| | |
+#  |_| \_|_|\_|___/_/   \_|_| |_|\__,_|_| |_|\___|_|\__,_|_|
+#
+# Github: github.com/aleixo-dev
+
+# Modo de depuração para correção de problemas no plugin em relação ao banco de dados.
+debug-mode: false
+
+#
+#   ____        _        _
+#  |  _ \  __ _| |_ __ _| |__   __ _ ___  ___
+#  | | | |/ _` | __/ _` | '_ \ / _` / __|/ _ \
+#  | |_| | (_| | || (_| | |_) | (_| \__ |  __/
+#  |____/ \__,_|\__\__,_|_.__/ \__,_|___/\___|
+#
+# Configuração do banco de dados.
+
+# Tipos de banco de dados: SQLITE, MYSQL
+database:
+  # Dados para conexão ao banco de dados MYSQL.
+  type: SQLITE
+  # Endereço de conexão do banco de dados. [EX: 127.0.0.1]
+  host: localhost
+  # Porta de conexão do banco de dados. [EX: 3306]
+  port: 3306
+  # Nome do banco de dados a ser conectado. [EX: minecraft]
+  db: ''
+  # Usuário de conexão. [EX: root]
+  user: ''
+  # Senha do usuário de conexão: [EX: 123]
+  password: ''
+
+#
+#  __  __
+# |  \/  | ___ ___ ___  __ _  __ _  ___ ___
+# | |\/| |/ _ / __/ __|/ _` |/ _` |/ _ / __|
+# | |  | |  __\__ \__ | (_| | (_| |  __\__ \
+# |_|  |_|\___|___|___/\__,_|\__, |\___|___/
+#                            |___/
+# Mensagens gerais do plugin.
+
+mensagens:
+  permissao: '&cVocê não tem permissão para utilizar este comando.'
+  tempo-decorrido: '&cAguarde: {remainMinutes} minutos e {remainSeconds} segundos para usar este comando novamente'
+  anuncio: '&6[Anuncio]'
+  ajuda: '&eUse /anunciar (mensagem)"'
