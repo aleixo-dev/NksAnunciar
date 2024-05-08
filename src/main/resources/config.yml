@@ -35,6 +35,20 @@ database:
   password: ''
 
 #
+#     ____             __ _
+#   / ___|___  _ __  / _(_) __ _
+#  | |   / _ \| '_ \| |_| |/ _` |
+#  | |__| (_) | | | |  _| | (_| |
+#   \____\___/|_| |_|_| |_|\__, |
+#                         |___/
+#
+# Configurações gerais do plugin.
+
+config:
+  # Tempo de espera para utilizar o /anunciar novamente.
+  cooldown-timer: 5
+
+#
 #  __  __
 # |  \/  | ___ ___ ___  __ _  __ _  ___ ___
 # | |\/| |/ _ / __/ __|/ _` |/ _` |/ _ / __|

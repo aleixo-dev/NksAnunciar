@@ -47,7 +47,7 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
     }
 
     private fun commandIsAvailable(currentTime: Long, lasTimeUpdate: Long) =
-        currentTime - lasTimeUpdate >= TimeUnit.MINUTES.toMillis(5)
+        currentTime - lasTimeUpdate >= TimeUnit.MINUTES.toMillis(plugin.config.getLong("config.cooldown-timer"))
 
     private fun showElapsedTime(currentTime: Long, lasTimeUpdate: Long, player: Player) {
 
