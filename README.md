@@ -18,7 +18,7 @@ Você pode estar realizando o download do plugin [**aqui**](https://github.com/a
 - SQLite
 
 ## Configuração 🛠️
-Possui apenas um arquivo de configuração `config.yml` onde é possível fazer a configuração de banco da dados, mensagens e configuração de timer de **cooldown** para jogadores. O plugin possui conexão com MYSQL e SQLite.
+Possui apenas um arquivo de configuração `config.yml` onde é possível fazer a configuração de banco da dados, mensagens e configuração de timer de **cooldown** para jogadores. O plugin possui conexão com `MYSQL` e `SQLite`.
 ## Dependências 🏷️
 Nenhuma depêndencia necessária.
 
