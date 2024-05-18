@@ -17,7 +17,7 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
 
         if (args.isNotEmpty() && args[0] == "reload" && player.hasPermission("nksanunciar.reload")) {
             plugin.reloadConfig()
-            player.sendMessage(TextColorUtil.text("&6&lnksAnunciar &7- &aPlugin recarregado com sucesso!"))
+            player.sendMessage(TextColorUtil.text(plugin.config.getString("mensagens.reload")))
             return true
         }
 
@@ -52,7 +52,7 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
     private fun showElapsedTime(currentTime: Long, lasTimeUpdate: Long, player: Player) {
 
         val elapsedTime = currentTime - lasTimeUpdate
-        val remainingTime = TimeUnit.MINUTES.toMillis(5) - elapsedTime
+        val remainingTime = TimeUnit.MINUTES.toMillis(plugin.config.getLong("config.cooldown-timer")) - elapsedTime
 
         if (remainingTime > 0) {
 
