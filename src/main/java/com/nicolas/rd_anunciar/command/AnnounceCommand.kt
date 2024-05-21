@@ -3,6 +3,7 @@ package com.nicolas.rd_anunciar.command
 import com.nicolas.rd_anunciar.Main
 import com.nicolas.rd_anunciar.instance.Announcement
 import com.nicolas.rd_anunciar.utils.TextColorUtil
+import com.nicolas.rd_anunciar.utils.linkChecker
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -19,6 +20,15 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
             plugin.reloadConfig()
             player.sendMessage(TextColorUtil.text(plugin.config.getString("mensagens.reload")))
             return true
+        }
+
+        if (args.isNotEmpty()) {
+            args.forEach {
+                if (it.linkChecker()) {
+                    player.sendMessage(TextColorUtil.text("&cVocê não pode enviar link no anúncio."))
+                    return true
+                }
+            }
         }
 
         val currentTime = System.currentTimeMillis()
@@ -64,9 +74,7 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
             val resultTextFormatted = firstReplace.replace("{remainSeconds}", remainSeconds.toString())
 
             player.sendMessage(
-                TextColorUtil.text(
-                    "${plugin.config.getString("mensagens.anuncio")} $resultTextFormatted"
-                )
+                TextColorUtil.text("${plugin.config.getString("mensagens.anuncio")} $resultTextFormatted")
             )
         }
     }
