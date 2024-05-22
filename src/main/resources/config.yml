@@ -61,4 +61,5 @@ mensagens:
   permissao: '&cVocê não tem permissão para utilizar este comando.'
   tempo-decorrido: '&cAguarde: {remainMinutes} minutos e {remainSeconds} segundos para usar este comando novamente'
   anuncio: '&6[Anuncio]'
-  ajuda: '&eUse /anunciar (mensagem)"'
+  ajuda: '&eUse /anunciar (mensagem)'
+  reload: '&6&lnksAnunciar &7- &aPlugin recarregado com sucesso!'
