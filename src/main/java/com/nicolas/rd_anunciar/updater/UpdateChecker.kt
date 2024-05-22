@@ -14,13 +14,13 @@ class UpdateChecker(
 
     fun getVersion(consumer: Consumer<String>) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin) {
-            try {
+            runCatching {
                 val inputStream = URL("$BASE_URL$resourceId/~").openStream()
                 val scanner = Scanner(inputStream)
                 if (scanner.hasNext()) {
                     consumer.accept(scanner.next())
                 }
-            } catch (exception: IOException) {
+            }.onFailure { exception ->
                 plugin.logger.info("Não foi possível buscar por atualizações: ${exception.message}")
             }
         }

@@ -1,6 +1,7 @@
 package com.nicolas.rd_anunciar.database
 
 import com.nicolas.rd_anunciar.Main
+import com.nicolas.rd_anunciar.instance.Announcement
 import org.bukkit.entity.Player
 import java.sql.*
 
@@ -8,10 +9,12 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
 
     private lateinit var connection: Connection
 
-    init { initializeConnection() }
+    init {
+        initializeConnection()
+    }
 
     private fun initializeConnection() {
-        try {
+        runCatching {
 
             Class.forName("org.sqlite.JDBC")
 
@@ -36,7 +39,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
 
             createDatabase(connection)
 
-        } catch (exception: SQLException) {
+        }.onFailure { exception ->
             if (plugin.config.getBoolean("debug-mode")) {
                 exception.printStackTrace()
             }
@@ -44,7 +47,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
     }
 
     private fun createDatabase(connection: Connection) {
-        try {
+        runCatching {
             val statement: Statement = connection.createStatement()
             statement.execute(
                 """
@@ -55,7 +58,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
                 """.trimIndent()
             )
             statement.close()
-        } catch (exception: SQLException) {
+        }.onFailure { exception ->
             if (plugin.config.getBoolean("debug-mode")) {
                 exception.printStackTrace()
             }
@@ -69,7 +72,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
     }
 
     private fun addAnnouncements(player: Player, currentTime: Long) {
-        try {
+        runCatching {
             val preparedStatement = connection.prepareStatement(
                 """
                 INSERT INTO announcements (uuid, username, announcementTime) VALUES (?,?,?)
@@ -79,7 +82,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
             preparedStatement.setString(2, player.displayName)
             preparedStatement.setTimestamp(3, Timestamp(currentTime))
             preparedStatement.executeUpdate()
-        } catch (exception: SQLException) {
+        }.onFailure { exception ->
             if (plugin.config.getBoolean("debug-mode")) {
                 exception.printStackTrace()
             }
@@ -87,7 +90,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
     }
 
     private fun playerExits(player: Player): Boolean {
-        return try {
+        return runCatching {
             val preparedStatement = connection.prepareStatement(
                 """
             SELECT * FROM announcements WHERE
@@ -97,12 +100,11 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
             preparedStatement.setString(1, player.uniqueId.toString())
             val resultSet = preparedStatement.executeQuery()
             resultSet.next()
-        } catch (exception: SQLException) {
+        }.onFailure { exception ->
             if (plugin.config.getBoolean("debug-mode")) {
                 exception.printStackTrace()
             }
-            false
-        }
+        }.getOrDefault(false)
     }
 
     fun updatePlayerAnnouncementTime(player: Player, currentTime: Long) {
@@ -111,7 +113,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
             addAnnouncements(player, currentTime)
         }
 
-        try {
+        runCatching {
             val preparedStatement = connection.prepareStatement(
                 """
                 UPDATE announcements SET announcementTime = ?
@@ -121,7 +123,7 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
             preparedStatement.setTimestamp(1, Timestamp(currentTime))
             preparedStatement.setString(2, player.uniqueId.toString())
             preparedStatement.executeUpdate()
-        } catch (exception: SQLException) {
+        }.onFailure { exception ->
             if (plugin.config.getBoolean("debug-mode")) {
                 exception.printStackTrace()
             }
@@ -129,8 +131,8 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
     }
 
     fun getPlayerAnnouncementTime(player: Player): Long {
-        return try {
 
+        return runCatching {
             val preparedStatement = connection.prepareStatement(
                 """
                 SELECT announcementTime FROM announcements WHERE uuid = ?
@@ -141,13 +143,12 @@ class AnnouncementDatabase(private val plugin: Main, private val path: String) {
             if (resultSet.next()) {
                 return resultSet.getTimestamp("announcementTime").time
             } else {
-                0
+                0L
             }
-        } catch (exception: SQLException) {
+        }.onFailure {
             if (plugin.config.getBoolean("debug-mode")) {
-                exception.printStackTrace()
+                it.printStackTrace()
             }
-            0
-        }
+        }.getOrDefault(0L)
     }
 }
