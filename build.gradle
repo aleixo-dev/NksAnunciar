@@ -9,6 +9,7 @@ version = '1.1.0'
 
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     maven {
         name = "spigotmc-repo"
         url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
@@ -21,6 +22,7 @@ repositories {
 
 dependencies {
     compileOnly "org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT"
+    compileOnly "com.github.MilkBowl:VaultAPI:1.7"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation "org.xerial:sqlite-jdbc:3.45.2.0"
 }
@@ -53,7 +55,7 @@ kotlin {
     jvmToolchain(8)
 }
 shadowJar {
-    destinationDirectory.set(file("C:/Users/Nicolas/Desktop/SERVIDOR/SERVIDOR_PAPER/plugins"))
+    destinationDirectory.set(file("C:/Users/Nicolas/Desktop/SERVIDOR/SERVIDOR_1_8/plugins"))
     archiveBaseName.set('NksAnunciar')
     archiveClassifier.set('')
     archiveVersion.set('')

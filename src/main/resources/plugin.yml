@@ -2,6 +2,8 @@ name: NksAnunciar
 version: '${version}'
 main: com.nicolas.rd_anunciar.Main
 load: STARTUP
+depend:
+  - Vault
 commands:
   anunciar:
     description: use to announce for all players online.

@@ -45,6 +45,12 @@ database:
 # Configurações gerais do plugin.
 
 config:
+  # Deve cobrar do player quando utilizando o comando
+  cobrar:
+    # Ativa ou desativa a opção de cobrar do player
+    ativo: true
+    # Quantidade que vai cobrar do jogador caso a opção acima estiver ativo.
+    preco: 1000
   # Tempo de espera para utilizar o /anunciar novamente.
   cooldown-timer: 5
 
@@ -63,3 +69,4 @@ mensagens:
   anuncio: '&6[Anuncio]'
   ajuda: '&eUse /anunciar (mensagem)'
   reload: '&6&lnksAnunciar &7- &aPlugin recarregado com sucesso!'
+  sem-money: '&cVocê não tem money suficiente para anunciar :('
