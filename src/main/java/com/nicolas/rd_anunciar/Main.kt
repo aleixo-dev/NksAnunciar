@@ -2,16 +2,22 @@ package com.nicolas.rd_anunciar
 
 import com.nicolas.rd_anunciar.command.AnnounceCommand
 import com.nicolas.rd_anunciar.database.AnnouncementDatabase
+import com.nicolas.rd_anunciar.hook.HookVaultApi
 import com.nicolas.rd_anunciar.listener.AdminJoinListener
 import com.nicolas.rd_anunciar.updater.UpdateChecker
 import com.nicolas.rd_anunciar.utils.Constants
+import net.milkbowl.vault.economy.Economy
 import org.bukkit.Bukkit
 import org.bukkit.plugin.java.JavaPlugin
 import java.sql.SQLException
 
 class Main : JavaPlugin() {
 
+    lateinit var economy: Economy
+        private set
+
     private var announcementDatabase: AnnouncementDatabase? = null
+
     var hasVersionAvailable: HashMap<String, Boolean> = hashMapOf(
         Constants.HAS_VERSION to false
     )
@@ -39,6 +45,16 @@ class Main : JavaPlugin() {
         registerEvents()
 
         saveDefaultConfig()
+
+        val hookVaultApi = HookVaultApi(this).hook()
+
+        if (hookVaultApi != null) {
+            economy = hookVaultApi
+        } else {
+            logger.severe(String.format("[%s] - Desativando plugin for não encontrar o Vault", description.name))
+            server.pluginManager.disablePlugin(this)
+            return
+        }
     }
 
     private fun registerEvents() {

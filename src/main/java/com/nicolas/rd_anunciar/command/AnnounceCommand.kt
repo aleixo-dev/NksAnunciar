@@ -46,9 +46,31 @@ class AnnounceCommand(private val plugin: Main) : CommandExecutor {
                 return true
             }
 
-            Announcement(args.toList(), player.displayName, plugin).runTask(plugin)
-            plugin.database()?.updatePlayerAnnouncementTime(player, currentTime)
+            if (plugin.config.getBoolean("config.cobrar.ativo")) {
 
+                val moneyToWithdraw = plugin.config.getString("config.cobrar.preco").toDouble()
+                if (plugin.economy.getBalance(player) <= 0) {
+                    player.sendMessage(TextColorUtil.text(plugin.config.getString("mensagens.sem-money")))
+                    return true
+                }
+
+                try {
+                    val economyResponse = plugin.economy.withdrawPlayer(player, moneyToWithdraw)
+
+                    if (economyResponse.transactionSuccess()) {
+                        Announcement(args.toList(), player.displayName, plugin).runTask(plugin)
+                        plugin.database()?.updatePlayerAnnouncementTime(player, currentTime)
+                    }
+                } catch (exception: NumberFormatException) {
+                    plugin.logger.warning("Houver um erro na formatação do preco, verifique a configuração do plugin!")
+                    return true
+                }
+
+            } else {
+                Announcement(args.toList(), player.displayName, plugin).runTask(plugin)
+                plugin.database()?.updatePlayerAnnouncementTime(player, currentTime)
+                return true
+            }
         } else {
             showElapsedTime(currentTime, lasTimeUpdate, player)
         }
